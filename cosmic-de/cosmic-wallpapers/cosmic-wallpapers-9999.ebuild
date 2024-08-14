@@ -12,7 +12,6 @@ if [ "${PV}" == "9999" ]; then
 	inherit git-r3
 	EGIT_REPO_URI="${HOMEPAGE}"
 	# Not sure if there's any sense in this NOT pointing to master
-	# EGIT_COMMIT=f93dcdf
 else
 	# TODO this is not really working atm
 	SRC_URI="https://github.com/pop-os/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
