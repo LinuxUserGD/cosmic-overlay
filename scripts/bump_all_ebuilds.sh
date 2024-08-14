@@ -64,9 +64,8 @@ awk '{ print $3; }' "${__temp_submodule_hashes}" | while read -r one_pkg; do
         errorExit 3 "could not find expected ebuild file: ${ebuild_file}"
     # This will errorExit if anything goes wrong
     git_commit_hash="$(get_commit_hash "${__temp_submodule_hashes}" "${one_pkg}")"
-        sed -i \
-            "${one_pkg}-9999.ebuild" || \
-            errorExit 120 "${ebuild_file}: could not update with the latest hash"
+    if ! grep -q "EGIT_COMMIT=${git_commit_hash}" "${ebuild_file}"; then
+        log "UPDATING ${ebuild_file} to EGIT_COMMIT=${git_commit_hash}"
         ebuild "${ebuild_file}" digest || \
             errorExit 121 "${ebuild_file}: could not refresh digest"
         git add . || \
